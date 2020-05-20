@@ -39,6 +39,7 @@ $ make manifests
 ```
 
 ```
+//start from here if you have genrated all the source and manifests files
 $ kubectl create -f config/crd/bases/
 $ kubectl create -f config/samples/webapp_v1_redis.yaml 
 $ kubectl create -f config/samples/webapp_v1_mywatchlist.yaml 
@@ -81,13 +82,21 @@ make deploy IMG=hmanikkothu/mywatchlist-operator:v1
 
 kubectl create -f config/samples/webapp_v1_redis.yaml 
 kubectl create -f config/samples/webapp_v1_mywatchlist.yaml 
-
+[forward port]
+kubectl port-forward svc/mywatchlist-sample -n default 7000:8080
 ```
+
 #### clean-up
 ```
 kubectl delete -f config/samples/webapp_v1_redis.yaml 
 kubectl delete -f config/samples/webapp_v1_mywatchlist.yaml 
 
 make undeploy IMG=<repo>/mywatchlist-operator:v1
+
+```
+#### notes
+```
+kubectl get redis mywatchlist -n default
+kubectl get crd mywatchlists.webapp.demo.my-watchlist.io -o yaml --export
 
 ```
